@@ -1,0 +1,53 @@
+name: Update SVG builds
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout destination repository
+        uses: actions/checkout@v7
+        with:
+          path: destination
+
+      - name: Checkout refract-vite
+        uses: actions/checkout@v7
+        with:
+          repository: refractproxy/refract-vite
+          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
+          path: refract-vite
+
+      - name: Install dependencies
+        working-directory: refract-vite
+        run: npm ci
+
+      - name: Build SVG files
+        working-directory: refract-vite
+        run: npm run build:svg
+
+      - name: Copy built files
+        run: |
+          cp -a refract-vite/dist-static/. destination/
+          rm -rf refract-vite
+
+      - name: Commit and push
+        working-directory: destination
+        run: |
+          git config user.name "qsnt"
+          git config user.email "328846507+qsnt@users.noreply.github.com"
+
+          git add -A
+
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+
+          git commit -m "workflow: update svg builds"
+          git push
