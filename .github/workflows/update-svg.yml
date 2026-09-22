@@ -23,13 +23,18 @@ jobs:
           token: ${{ secrets.PRIVATE_REPO_TOKEN }}
           path: refract-vite
 
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
       - name: Install dependencies
         working-directory: refract-vite
-        run: npm ci
+        run: bun install --frozen-lockfile
 
       - name: Build SVG files
         working-directory: refract-vite
-        run: npm run build:svg
+        run: bun run build:svg
 
       - name: Copy built files
         run: |
