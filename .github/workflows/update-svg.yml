@@ -40,7 +40,7 @@ jobs:
 
       - name: Copy built files
         run: |
-          cp -a refract-vite/dist-static/. destination/
+          cp -a refract-vite/dist-svg/. destination/
           rm -rf refract-vite
 
       - name: Commit and push
