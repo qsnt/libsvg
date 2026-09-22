@@ -34,6 +34,8 @@ jobs:
 
       - name: Build SVG files
         working-directory: refract-vite
+        env:
+          WISP_SERVER_URL: ${{ secrets.WISP_SERVER_URL }}
         run: bun run build:svg
 
       - name: Copy built files
