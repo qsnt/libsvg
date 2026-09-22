@@ -1,0 +1,1 @@
+const e=globalThis.$scramjetController,{Controller:r,Frame:n,ManagedPlugin:o,VERSION:t,assertRuntimeScramjetVersion:a,config:l}=e;export{r as Controller,n as Frame,o as ManagedPlugin,t as VERSION,a as assertRuntimeScramjetVersion,l as config};
